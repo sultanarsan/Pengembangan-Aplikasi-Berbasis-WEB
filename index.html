@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Mahasiswa - Node.js</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f2f4f8;
+        }
+
+        .container {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 10px;
+            width: 380px;
+            box-shadow: 0 5px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 3px;
+        }
+
+        .btn-tambah {
+            background: #007bff;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: black;
+        }
+
+        .btn-hapus {
+            background: #dc3545;
+            color: white;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        li {
+            background: #f1f1f1;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>CRUD Mahasiswa</h2>
+
+    <input type="text" id="nama" placeholder="Masukkan Nama">
+    <button class="btn-tambah" onclick="tambahData()">Tambah</button>
+
+    <ul id="listData"></ul>
+</div>
+
+<script>
+    let dataMahasiswa = [];
+
+    function renderData() {
+        const list = document.getElementById("listData");
+        list.innerHTML = "";
+
+        dataMahasiswa.forEach((item, index) => {
+            list.innerHTML += `
+            <li>
+                ${item}
+                
+                <div>
+                    <button class="btn-edit" onclick="editData(${index})">Edit</button>
+                    <button class="btn-hapus" onclick="hapusData(${index})">Hapus</button>
+                    
+                </div>
+            </li>
+            `;
+            
+        });
+
+
+    }
+
+    function tambahData() {
+        const nama = document.getElementById("nama").value;
+
+        if (nama === "") {
+            alert("Nama tidak boleh kosong!");
+            return;
+        }
+
+        dataMahasiswa.push(nama);
+        document.getElementById("nama").value = "";
+        renderData();
+    }
+
+    function editData(index) {
+        const namaBaru = prompt("Masukkan nama baru:", dataMahasiswa[index]);
+        if (namaBaru !== null && namaBaru !== "") {
+            dataMahasiswa[index] = namaBaru;
+            renderData();
+        }
+    }
+
+    function hapusData(index) {
+        dataMahasiswa.splice(index, 1);
+        renderData();
+    }
+</script>
+</body>
+</html>
